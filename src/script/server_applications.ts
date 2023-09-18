@@ -1,6 +1,7 @@
 import * as fs from 'fs/promises';
 import * as config_common from '../config/common.json';
 import * as path from 'path';
+import { ServerException } from './exception';
 
 const applications: {
     [name: string]: {
@@ -42,5 +43,5 @@ export function getStaticFilepath(url: string) {
             return path.join(fileMapItem.path, url.substring(fileMapItem.url.length).split("?")[0]);
         }
     }
-    throw "File not found";
+    throw new ServerException(404, `File not found[${url}]`);
 }

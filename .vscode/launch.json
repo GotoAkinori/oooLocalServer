@@ -15,6 +15,21 @@
                 "<node_internals>/**"
             ],
             "type": "node"
+        },
+        {
+            "name": "Launch Program With File(Tree)",
+            "program": "${workspaceFolder}/dst/script/main.js",
+            "request": "launch",
+            "args": [
+                "-f",
+                "../oooTreeDataEditor/sample_data/test-local.json",
+                "-a",
+                "oootree"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
         }
     ]
 }

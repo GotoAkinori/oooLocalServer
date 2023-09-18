@@ -2,3 +2,4 @@
 js
 js-server
 node_modules
+dst/config/applications/*.json

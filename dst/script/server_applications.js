@@ -35,6 +35,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStaticFilepath = exports.getConfig = exports.init = void 0;
 const fs = __importStar(require("fs/promises"));
 const path = __importStar(require("path"));
+const exception_1 = require("./exception");
 const applications = {};
 const fileMap = [];
 function init() {
@@ -62,7 +63,7 @@ function getStaticFilepath(url) {
             return path.join(fileMapItem.path, url.substring(fileMapItem.url.length).split("?")[0]);
         }
     }
-    throw "File not found";
+    throw new exception_1.ServerException(404, `File not found[${url}]`);
 }
 exports.getStaticFilepath = getStaticFilepath;
 //# sourceMappingURL=server_applications.js.map

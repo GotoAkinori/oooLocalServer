@@ -28,40 +28,50 @@ const http = __importStar(require("http"));
 const config_common = __importStar(require("../config/common.json"));
 const server_file_1 = require("./server_file");
 const server_static_1 = require("./server_static");
+const exception_1 = require("./exception");
 const server = http.createServer((req, res) => {
-    if (req.url) {
-        const [urlPart, queryPart] = req.url.split("?");
-        const urlPath = urlPart.split("/");
-        let query = {};
-        if (queryPart) {
-            for (let [key, value] of queryPart.split("&").map(v => v.split("="))) {
-                query[key] = decodeURIComponent(value);
+    try {
+        if (req.url) {
+            const [urlPart, queryPart] = req.url.split("?");
+            const urlPath = urlPart.split("/");
+            let query = {};
+            if (queryPart) {
+                for (let [key, value] of queryPart.split("&").map(v => v.split("="))) {
+                    query[key] = decodeURIComponent(value);
+                }
             }
-        }
-        while (urlPath[0] == "" || urlPath[0] == ".") {
-            urlPath.shift();
-        }
-        if (urlPath[0] == "command" && urlPath[1] == "add-file") {
-            (0, server_file_1.addFile)(req, res, query);
-        }
-        else if (urlPath[0] == "command" && urlPath[1] == "load") {
-            (0, server_file_1.loadFile)(req, res, query);
-        }
-        else if (urlPath[0] == "command" && urlPath[1] == "save") {
-            (0, server_file_1.saveFile)(req, res, query);
-        }
-        else if (urlPath[0] == "command" && urlPath[1] == "close") {
-            if ((0, server_file_1.closeFile)(req, res, query) == false) {
-                process.exit(0);
+            while (urlPath[0] == "" || urlPath[0] == ".") {
+                urlPath.shift();
+            }
+            if (urlPath[0] == "command" && urlPath[1] == "add-file") {
+                (0, server_file_1.addFile)(req, res, query);
+            }
+            else if (urlPath[0] == "command" && urlPath[1] == "load") {
+                (0, server_file_1.loadFile)(req, res, query);
+            }
+            else if (urlPath[0] == "command" && urlPath[1] == "save") {
+                (0, server_file_1.saveFile)(req, res, query);
+            }
+            else if (urlPath[0] == "command" && urlPath[1] == "close") {
+                if ((0, server_file_1.closeFile)(req, res, query) == false) {
+                    process.exit(0);
+                }
+            }
+            else {
+                (0, server_static_1.staticFile)(req, res, query);
             }
         }
         else {
-            (0, server_static_1.staticFile)(req, res, query);
+            res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+            res.end('Server is aliving');
         }
     }
-    else {
-        res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Server is aliving');
+    catch (exception) {
+        if (exception instanceof exception_1.ServerException) {
+            console.error("[" + exception.code + "] " + exception.message);
+            res.writeHead(exception.code);
+            res.end();
+        }
     }
 });
 function startServer() {
