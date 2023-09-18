@@ -1,0 +1,9 @@
+{
+    "launch": "http://localhost:{port}/sample/index.html?id={id}",
+    "static_files": [
+        {
+            "url": "/sample/",
+            "path": "{dir}"
+        }
+    ]
+}

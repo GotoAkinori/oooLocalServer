@@ -1,0 +1,23 @@
+{
+    "port": 3000,
+    "mime": {
+        ".bmp": "image/bmp",
+        ".css": "text/css",
+        ".gif": "image/gif",
+        ".htm": "text/html",
+        ".html": "text/html",
+        ".ico": "image/vnd.microsoft.icon",
+        ".jpeg": "image/jpeg",
+        ".jpg": "image/jpeg",
+        ".js": "application/javascript",
+        ".json": "application/json",
+        ".mp3": "audio/mpeg",
+        ".png": "image/png",
+        ".pdf": "application/pdf",
+        ".txt": "text/plain",
+        ".woff": "font/woff",
+        ".woff2": "font/woff2",
+        ".xml": "application/xml",
+        ".zip": "application/zip"
+    }
+}

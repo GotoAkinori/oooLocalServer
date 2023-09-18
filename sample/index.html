@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OOO Local Server Sample</title>
+    <script>
+      function getURLParam() {
+        let queryString = document.location.search.substring(1);
+        if (queryString) {
+          let query = {};
+          for (let [key, value] of queryString
+            .split("&")
+            .map((v) => v.split("="))) {
+            query[key] = decodeURIComponent(value);
+          }
+          return query;
+        } else {
+          return {};
+        }
+      }
+      async function load() {
+        let query = getURLParam();
+        let response = await fetch(`../command/load?id=${query.id}`);
+        if (response.status == 200) {
+          let textarea = document.getElementById("data");
+          textarea.value = await response.text();
+        } else {
+          alert("load error");
+        }
+      }
+      async function save() {
+        let query = getURLParam();
+        let textarea = document.getElementById("data");
+        let content = textarea.value;
+        let data = await fetch(`../command/save?id=${query.id}`, {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/octet-stream",
+          },
+          body: content,
+        });
+        if (data.status == 200) {
+          consol.log("Save Succeed.");
+        } else {
+          alert("save error");
+        }
+      }
+      async function close() {
+        let query = getURLParam();
+        await fetch(`../command/close?id=${query.id}`);
+      }
+    </script>
+    <style>
+      textarea {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body onload="load();" onunload="close();">
+    <button onclick="save();">Save</button>
+    <br />
+    <label>
+      Sample Editor<br />
+      <textarea name="data" id="data"></textarea>
+    </label>
+  </body>
+</html>

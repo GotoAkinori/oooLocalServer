@@ -1,0 +1,22 @@
+{
+  "name": "ooolocalserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GotoAkinori/oooLocalServer.git"
+  },
+  "author": "Goto Akinori",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GotoAkinori/oooLocalServer/issues"
+  },
+  "homepage": "https://github.com/GotoAkinori/oooLocalServer#readme",
+  "devDependencies": {
+    "@types/node": "^20.6.2"
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Program With File",
+            "program": "${workspaceFolder}/dst/script/main.js",
+            "request": "launch",
+            "args": [
+                "-f",
+                "./sample/test/test.txt",
+                "-a",
+                "sample"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        }
+    ]
+}
